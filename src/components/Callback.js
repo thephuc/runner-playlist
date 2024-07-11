@@ -18,18 +18,20 @@ const Callback = () => {
   useEffect(() => {
     const loadData = async () => {
       //  TODO: handle auto-logout + clear localStorage data when both tokens expire
-      //  TODO: find way to check if accessToken has expired
       const code = searchParams.get('code');
       console.log(expiryTime)
-      if (!accessToken || Date.now() < expiryTime) {
+      if (!accessToken || Date.now() > expiryTime) {
         await dispatch(getFirstAccessToken(code))
+      }
+      if (accessToken && Date.now() < expiryTime) {
         await dispatch(getUserProfile())
+        window.location.href = '/tempo-form'
       }
     }
     loadData()
-    window.location.href = '/tempo-form'
     
-  }, []);
+    
+  }, [expiryTime]);
 
   return (
     <div>

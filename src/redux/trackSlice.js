@@ -35,16 +35,16 @@ const trackSlice = createSlice({
               trackData.isSelected = false
           return trackData;
         })
-        localStorage.setItem('tracks', JSON.stringify(state.tracks))
+        //localStorage.setItem('tracks', JSON.stringify(state.tracks))
       }
     },
     addTrack(state, action) {
       state.tracks.push(action.payload);
-      localStorage.setItem('tracks', JSON.stringify(state.tracks))
+      //localStorage.setItem('tracks', JSON.stringify(state.tracks))
     },
     removeTrack(state, action) {
       state.tracks = state.tracks.filter(track => track.id !== action.payload.id);
-      localStorage.setItem('tracks', JSON.stringify(state.tracks))
+      //localStorage.setItem('tracks', JSON.stringify(state.tracks))
     },
     setTrackList(state, action) {
       if (action.payload.trackList) {
@@ -52,12 +52,13 @@ const trackSlice = createSlice({
         console.log(trackList)
 
         state.tracks = trackList;
-        localStorage.setItem('tracks', JSON.stringify(trackList))
+        //localStorage.setItem('tracks', JSON.stringify(trackList))
       }
     },
     removeAllTracks(state) {
       state.tracks = [];
-      localStorage.removeItem('tracks')
+      //  TODO: delete all commented localStorage calls
+      //localStorage.removeItem('tracks')
     },
   },
   extraReducers: (builder) => {
@@ -69,7 +70,7 @@ const trackSlice = createSlice({
       state.loading = false;
       if (action.payload) {
         state.tracks = action.payload
-        localStorage.setItem('tracks', JSON.stringify(action.payload))
+        //localStorage.setItem('tracks', JSON.stringify(action.payload))
       }
     })    
     builder.addCase(getRecommendedTracks.rejected, (state, action) => {

@@ -12,6 +12,7 @@ const processGetTokenResp = (apiResp) => {
 }
 
 export const getFirstAccessTokenApi = async (code) => {
+  console.log('getting first access token')
   let response = {accessToken: null, refreshToken: null, expiresIn: null}
   try {
     const payload = {   
@@ -33,9 +34,8 @@ export const getFirstAccessTokenApi = async (code) => {
   return response;
 }
 
-export const getRefreshedAccessTokenApi = async () => {
+export const getRefreshedAccessTokenApi = async (refreshToken) => {
   // refresh token that has been previously stored
-  const refreshToken = localStorage.getItem('refreshToken');
   let response = {accessToken: null, refreshToken: null, expiresIn: null}
 
   try {

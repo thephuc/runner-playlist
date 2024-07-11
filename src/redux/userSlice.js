@@ -56,7 +56,7 @@ const userSlice = createSlice({
     //  localStorage.setItem('userProfile', JSON.stringify(action.payload));
     //},
     clearUserProfile() {
-      localStorage.removeItem('userProfile');
+      //localStorage.removeItem('userProfile');
       return initialState;
     },
   },
@@ -68,7 +68,7 @@ const userSlice = createSlice({
     builder.addCase(getUserProfile.fulfilled, (state, action) => {
       state.loading = false;
       state.userProfile = action.payload;
-      localStorage.setItem('userProfile', JSON.stringify(action.payload));
+      //localStorage.setItem('userProfile', JSON.stringify(action.payload));
     })   
     builder.addCase(getUserProfile.rejected, (state, action) => {
       state.loading = false;

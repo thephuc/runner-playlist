@@ -16,9 +16,9 @@ export const getFirstAccessToken = createAsyncThunk(
 
 export const getRefreshedAccessToken = createAsyncThunk(
   'auth/getRefreshedAccessToken',
-  async (_, thunkAPI) => {
+  async (refreshToken, thunkAPI) => {
     try {
-      const response = await getRefreshedAccessTokenApi();
+      const response = await getRefreshedAccessTokenApi(refreshToken);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -44,7 +44,7 @@ const authSlice = createSlice({
     //},
     clearAccessToken(state) {
       state.accessToken = null;
-      localStorage.removeItem('accessToken');
+      //localStorage.removeItem('accessToken');
     },
     //setRefreshToken(state, action) {
     //  state.refreshToken = action.payload;
@@ -52,7 +52,7 @@ const authSlice = createSlice({
     //},
     clearRefreshToken(state) {
       state.refreshToken = null;
-      localStorage.removeItem('refreshToken');
+      //localStorage.removeItem('refreshToken');
     },
   },
   extraReducers: (builder) => {
@@ -68,9 +68,9 @@ const authSlice = createSlice({
           state.accessToken = accessToken;
           state.refreshToken = refreshToken;  
           state.expiryTime = expiryTime;
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          localStorage.setItem('expiryTime', expiryTime);
+          //localStorage.setItem('accessToken', accessToken);
+          //localStorage.setItem('refreshToken', refreshToken);
+          //localStorage.setItem('expiryTime', expiryTime);
         }
        
       }
@@ -87,16 +87,15 @@ const authSlice = createSlice({
 
     builder.addCase(getFirstAccessToken.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload)
       if (action.payload && action.payload.accessToken) {
         const { accessToken, refreshToken , expiryTime} = action.payload;
         if (expiryTime > Date.now()) {
           state.accessToken = accessToken;
           state.refreshToken = refreshToken; 
           state.expiryTime = expiryTime;
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          localStorage.setItem('expiryTime', expiryTime);
+          //localStorage.setItem('accessToken', accessToken);
+          //localStorage.setItem('refreshToken', refreshToken);
+          //localStorage.setItem('expiryTime', expiryTime);
         }
         
       }

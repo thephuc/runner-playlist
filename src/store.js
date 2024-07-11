@@ -20,7 +20,6 @@ import userReducer from './redux/userSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'track', 'user'], // Reducers you want to persist
 };
 
 const rootReducer = combineReducers({
