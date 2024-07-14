@@ -7,6 +7,10 @@ export const GET_USER_PROFILE_ENDPOINT = `${API_HOST}/v1/me`
 export const AUTHORIZE_ACCOUNT_ENDPOINT = `${ACCOUNT_API_HOST}/authorize`
 export const GET_ACCESS_TOKEN_ENDPOINT = `${ACCOUNT_API_HOST}/api/token`
 
+//  if current_time < access_token_expiry_time - ACCESS_TOKEN_EXPIRY_THRESHOLD_MS,
+//  then trigger API to get new access token
+export const ACCESS_TOKEN_EXPIRY_THRESHOLD_MS = 60000
+
 export const TRACK_ACTIONS = {
   ADD: 'add',
   REMOVE: 'remove'

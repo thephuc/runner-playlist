@@ -1,5 +1,5 @@
 import axiosInstance from "../axiosInstance";
-import { GET_ACCESS_TOKEN_ENDPOINT } from "../utils/constants";
+import { ACCESS_TOKEN_EXPIRY_THRESHOLD_MS, GET_ACCESS_TOKEN_ENDPOINT } from "../utils/constants";
 
 const processGetTokenResp = (apiResp) => {
   const response = {accessToken: null, refreshToken: null, expiryTime: null}
@@ -7,7 +7,7 @@ const processGetTokenResp = (apiResp) => {
   const {data: {access_token, refresh_token, expires_in}} = apiResp;
   response.accessToken = access_token
   response.refreshToken = refresh_token
-  response.expiryTime = Date.now() + expires_in * 1000
+  response.expiryTime = Date.now() + expires_in * 1000 - ACCESS_TOKEN_EXPIRY_THRESHOLD_MS
   return response
 }
 
@@ -56,4 +56,4 @@ export const getRefreshedAccessTokenApi = async (refreshToken) => {
   }
   
   return response 
- }
+}

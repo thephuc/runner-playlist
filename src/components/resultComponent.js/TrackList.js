@@ -47,12 +47,12 @@ const TrackList = ({ tracks }) => {
                   track.previewUrl && 
                   <Box mt={2}>
                     <Divider />
-                        <IconButton aria-label="play">
-                          <audio controls>
-                            <source src={track.previewUrl} type="audio/mpeg" />
+                    <IconButton aria-label="play">
+                      <audio controls>
+                        <source src={track.previewUrl} type="audio/mpeg" />
                             Your browser does not support the audio element.
-                          </audio>
-                        </IconButton>
+                      </audio>
+                    </IconButton>
                   </Box>
                 }    
               </CardContent>
@@ -68,9 +68,9 @@ const TrackList = ({ tracks }) => {
                 <Grid item>
                   <FormControl variant="outlined">
                     {track.isSelected ?
-                     <Button color='secondary' variant="contained" onClick={(e) => handleTrackBtn(e, track.id, TRACK_ACTIONS.REMOVE)}>Remove from playlist</Button> 
-                     :
-                     <Button color='success' variant="contained" onClick={(e) => handleTrackBtn(e, track.id, TRACK_ACTIONS.ADD)}>Add to playlist</Button>
+                      <Button color='secondary' variant="contained" onClick={(e) => handleTrackBtn(e, track.id, TRACK_ACTIONS.REMOVE)}>Remove from playlist</Button> 
+                      :
+                      <Button color='success' variant="contained" onClick={(e) => handleTrackBtn(e, track.id, TRACK_ACTIONS.ADD)}>Add to playlist</Button>
                     }
                     
 
