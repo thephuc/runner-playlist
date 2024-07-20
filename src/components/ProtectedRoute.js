@@ -11,7 +11,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 ProtectedRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired = false,
-  children: PropTypes.elementType.isRequired, // Requires a valid React component as 'component' prop
+  isAuthenticated: PropTypes.bool.isRequired,
+  children: PropTypes.object.isRequired, // Requires a valid React component as 'component' prop
 };
 export default ProtectedRoute;

@@ -16,6 +16,7 @@ import {thunk} from 'redux-thunk';
 import authReducer from './redux/authSlice';
 import trackReducer from './redux/trackSlice';
 import userReducer from './redux/userSlice';
+import playlistReducer from './redux/playlistSlice';
 
 const persistConfig = {
   key: 'root',
@@ -25,7 +26,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   track: trackReducer,
-  user: userReducer
+  user: userReducer,
+  playlist: playlistReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

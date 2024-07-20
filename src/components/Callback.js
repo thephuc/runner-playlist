@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, {  useEffect } from 'react';
+import React, {  useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,12 +14,10 @@ const Callback = () => {
   const accessToken = useSelector(state => state.auth.accessToken);
   const expiryTime = useSelector(state => state.auth.expiryTime);
 
-
   useEffect(() => {
     const loadData = async () => {
       //  TODO: handle auto-logout + clear localStorage data when both tokens expire
       const code = searchParams.get('code');
-      console.log(expiryTime)
       if (!accessToken || Date.now() > expiryTime) {
         await dispatch(getFirstAccessToken(code))
       }
@@ -29,8 +27,6 @@ const Callback = () => {
       }
     }
     loadData()
-    
-    
   }, [expiryTime]);
 
   return (
@@ -41,4 +37,4 @@ const Callback = () => {
   );
 };
 
-export default Callback;
+export default memo(Callback);

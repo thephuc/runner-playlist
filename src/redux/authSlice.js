@@ -38,22 +38,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    //setAccessToken(state, action) {
-    //  state.accessToken = action.payload;
-    //  localStorage.setItem('accessToken', action.payload);
-    //},
-    clearAccessToken(state) {
-      state.accessToken = null;
-      //localStorage.removeItem('accessToken');
+    resetAuthStore() {
+      return initialState
     },
-    //setRefreshToken(state, action) {
-    //  state.refreshToken = action.payload;
-    //  localStorage.setItem('refreshToken', action.payload);
-    //},
-    clearRefreshToken(state) {
-      state.refreshToken = null;
-      //localStorage.removeItem('refreshToken');
-    },
+    
   },
   extraReducers: (builder) => {
     builder.addCase(getRefreshedAccessToken.pending, (state) => {
@@ -108,5 +96,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAccessToken, clearAccessToken, setRefreshToken, clearRefreshToken } = authSlice.actions;
+export const { resetAuthStore } = authSlice.actions;
 export default authSlice.reducer;

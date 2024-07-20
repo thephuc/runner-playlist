@@ -15,8 +15,9 @@ export const getRecommendedTracksApi = async ({tempo, genreStr}) => {
     
     const getRecommendedTrackApiResp = await axiosInstance.get(`${TRACK_RECOMMENDATION_ENDPOINT}?${urlParams.toString()}`);
     const {data: { tracks}} = getRecommendedTrackApiResp;
-    console.log(`total number of tracks: ${tracks.length}`)  
-    trackList = tracks.map((trackInfo) => {
+    const filteredTracks = tracks.filter((track) => track?.id && track?.uri)
+    console.log(`total number of valid tracks with ID and URI: ${filteredTracks.length}`)  
+    trackList = filteredTracks.map((trackInfo) => {
       const {id, name, preview_url: previewUrl, uri, href, external_urls: {spotify: spotifyUrl}, artists, album} = trackInfo;
       return {
         id, 
@@ -32,7 +33,7 @@ export const getRecommendedTracksApi = async ({tempo, genreStr}) => {
     })
     //  TODO: error handling
   } catch (e) {
-    console.log("Failed to get track recommendation: ", e)
+    console.error("Failed to get track recommendation: ", e)
   }
   return trackList
 
