@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 
 const CreatePlaylistDialog = ({handleSubmit}) => {
   const tempo = useSelector(state => state.playlist.tempo);
-  const genreList = useSelector(state => state.playlist.genreList);
+  const selectedGenreList = useSelector(state => state.playlist.selectedGenreList);
   const [open, setOpen] = useState(false);
   const [isPublic, setIsPublic] = useState(false)
 
@@ -52,7 +52,7 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
         <DialogTitle>Create new playlist with selected songs</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Create a new playlist with tempo {tempo} {genreList && genreList.length > 0 && `and genre(s) ${genreList.join(', ')}`}
+            Create a new playlist with tempo {tempo} {selectedGenreList && selectedGenreList.length > 0 && `and genre(s) ${selectedGenreList.join(', ')}`}
           </DialogContentText>
           <TextField
             autoFocus

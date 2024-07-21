@@ -44,7 +44,7 @@ const initialState = {
   images: [], 
   uri: '',
   tempo: 0,
-  genreList: [],
+  selectedGenreList: [],
   trackList: [],  // Array to store track URIs
   loading: false,
   error: null
@@ -57,10 +57,13 @@ const playlistSlice = createSlice({
     setTempo(state, action) {
       state.tempo = action.payload || 0
     },
-    setGenreList(state, action) {
-      if (action.payload && action.payload.length > 0) {
-        state.genreList = action.payload
+    setSelectedGenreList(state, action) {
+      if (action.payload && typeof Array.isArray(action.payload)) {
+        state.selectedGenreList = action.payload
       }
+    },
+    resetPlaylistState() {
+      return initialState
     }
   },
   extraReducers: (builder) => {
@@ -85,6 +88,6 @@ const playlistSlice = createSlice({
   }
 });
 
-export const { setTempo, setGenreList } = playlistSlice.actions;
+export const { setTempo, setSelectedGenreList } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
