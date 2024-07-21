@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   TextField,
@@ -11,14 +11,31 @@ import {
   Autocomplete,
 } from '@mui/material';
 import { getRecommendedTracks } from '../redux/trackSlice';
-import { setSelectedGenreList, setTempo } from '../redux/playlistSlice';
+import { setArtistSeedList, setTempo } from '../redux/playlistSlice';
+import { searchTracksOrUsers } from '../redux/searchSlice';
 
-const FULL_GENRE_LIST = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"];
+//  TODO: move this to a separate custom hook file
+function useDebounce(cb, delay) {
+  const [debounceValue, setDebounceValue] = useState(cb);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebounceValue(cb);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [cb, delay]);
+  return debounceValue;
+}
 
 const TempoForm = () => {
-  const tempo = useSelector(state => state.playlist.tempo);
-  const selectedGenreList = useSelector(state => state.playlist.selectedGenreList);
+  const [searchVal, setSearchVal] = useState("");
 
+  const tempo = useSelector(state => state.playlist.tempo);
+  const artistSeedList = useSelector(state => state.playlist.artistSeedList);
+  const artistOptions = useSelector(state => state.search?.artistData?.items);
+  console.log(artistSeedList)
   const dispatch = useDispatch()
   
   const handleTempoChange = (e) => {
@@ -27,18 +44,37 @@ const TempoForm = () => {
     dispatch(setTempo(newVal))
   };
 
-  const handleGenreChange = (e, newValue) => {
-    dispatch(setSelectedGenreList(newValue))
+  const handleOptionSelected = (e, newValue) => {
+    console.log(newValue)
+    const idList = newValue.map((item) => {
+      return {
+        id: item.id,
+        name: item.name
+      }
+    })
+    dispatch(setArtistSeedList(idList))
   };
 
+  const debouncedSearchVal = useDebounce(searchVal, 500);
+  useEffect(() => {
+    if (debouncedSearchVal && debouncedSearchVal.length > 2) {
+       
+      dispatch(searchTracksOrUsers(debouncedSearchVal))
+
+    }
+  }, [debouncedSearchVal]);
+
+  //);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const genreStr = selectedGenreList.join(',')
-    await dispatch(getRecommendedTracks({tempo, genreStr}))
+
+    const artistIdList = artistSeedList.map((item) => item?.id)
+    const seedArtistStr = artistIdList.join(',')
+    await dispatch(getRecommendedTracks({tempo, seedArtistStr}))
     window.location.href = "/result";
   };
 
-  const isSubmitDisabled = !tempo || !selectedGenreList || !selectedGenreList.length
+  const isSubmitDisabled = !tempo || !artistSeedList || !artistSeedList.length
 
   return (
     <Container maxWidth="sm">
@@ -60,22 +96,27 @@ const TempoForm = () => {
               <FormControl fullWidth variant="outlined" required>
                 <Autocomplete
                   multiple
+                  freeSolo
                   id="tags-standard"
-                  options={FULL_GENRE_LIST}
-                  onChange={handleGenreChange}
-                  value={selectedGenreList}
-                  getOptionLabel={(option) => option}
+                  getOptionKey={(option) => option.id} 
+                  getOptionLabel={(option) => option.name}
+                  options={artistOptions}
+                  onChange={handleOptionSelected}
+                  onInputChange={(e, newInputValue) => {
+                    setSearchVal(newInputValue)
+                  }}
+                  value={artistSeedList}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       variant="standard"
-                      label="Select genres"
-                      placeholder="Select genres"
+                      label="Select artists"
+                      placeholder="Select artists"
                     />
                   )}
                   renderTags={(tagValue, getTagProps) => {
                     return tagValue.map((option, index) => (
-                      <Chip {...getTagProps({ index })} key={option} label={option} />
+                      <Chip {...getTagProps({ index })} key={option.id} label={option.name} />
                     ))
                   }}
                 />

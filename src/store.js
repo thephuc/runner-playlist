@@ -17,6 +17,7 @@ import authReducer from './redux/authSlice';
 import trackReducer from './redux/trackSlice';
 import userReducer from './redux/userSlice';
 import playlistReducer from './redux/playlistSlice';
+import searchReducer from './redux/searchSlice';
 
 const persistConfig = {
   key: 'root',
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   track: trackReducer,
   user: userReducer,
-  playlist: playlistReducer
+  playlist: playlistReducer,
+  search: searchReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
