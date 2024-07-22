@@ -9,6 +9,11 @@ const RecommendedTracks = () => {
   const dispatch = useDispatch()
   const trackList = useSelector(state => state.track.tracks);
   const tempo = useSelector(state => state.playlist.tempo);
+  const artistSeedList = useSelector(state => state.playlist.artistSeedList);
+  const seedArtistNames = artistSeedList.map((artist) => artist?.name)
+
+  const trackSeedList = useSelector(state => state.playlist.trackSeedList);
+  const seedTrackNames = trackSeedList.map((track) => track?.name)
 
 
   const flattenedTrackList = trackList.map((trackInfo) => {
@@ -46,7 +51,14 @@ const RecommendedTracks = () => {
     <div>
       <Typography align='center' marginTop={4} variant="h4">Create playlist with recommended Tracks</Typography>
       <Typography align='center' marginTop={2} variant="subtitle1">Tempo: {tempo}</Typography>
-
+      {
+        seedArtistNames && seedArtistNames.length > 0 &&
+            <Typography marginX={2} align='center' variant="subtitle1">Seed Artist(s): {seedArtistNames.join(', ')}</Typography>
+      }
+      {
+        seedTrackNames && seedTrackNames.length > 0 &&
+            <Typography marginX={2} align='center' variant="subtitle1">Seed Track(s): {seedTrackNames.join(', ')}</Typography>
+      }
       <TrackList tracks={flattenedTrackList} />
       <CreatePlaylistDialog handleSubmit={handleCreatePlaylistSubmit} />
     </div>

@@ -16,3 +16,8 @@ export const TRACK_ACTIONS = {
   ADD: 'add',
   REMOVE: 'remove'
 }
+
+export const SEARCH_TYPE = {
+  ARTIST: 'artist',
+  TRACK: 'track'
+}

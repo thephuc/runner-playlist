@@ -2,12 +2,12 @@ import axiosInstance from "../axiosInstance"
 import { SEARCH_ENDPOINT } from "../utils/constants"
 
 
-export const getSearchApi = async (queryStr) => {
+export const getSearchApi = async ({queryStr, type}) => {
   let searchResult = {trackData: {}, artistData: {}}
   try {
     const urlParams = new URLSearchParams({
       //  TODO: consider setting type=album and use all songs in that album for recommendation seed
-      type: 'artist,track',
+      type,
       q: queryStr,
       limit: 30
     })

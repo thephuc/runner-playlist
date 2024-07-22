@@ -2,17 +2,22 @@ import axiosInstance from "../axiosInstance"
 import { TRACK_RECOMMENDATION_ENDPOINT } from "../utils/constants"
 
 
-export const getRecommendedTracksApi = async ({tempo, seedArtistStr}) => {
+export const getRecommendedTracksApi = async ({tempo, seedArtistStr, seedTrackStr}) => {
   let trackList = []
   try {
     const urlParams = new URLSearchParams({
-      seed_artists: seedArtistStr,
-      //seed_tracks: '',
       target_tempo: tempo,
       //min_popularity: 70,
       //max_popularity: 95,
-      limit: 100
+      limit: 30
     })
+
+    if (seedArtistStr) {
+      urlParams.append('seed_artists', seedArtistStr)
+    }
+    if (seedTrackStr) {
+      urlParams.append('seed_tracks', seedTrackStr)
+    }
     
     const getRecommendedTrackApiResp = await axiosInstance.get(`${TRACK_RECOMMENDATION_ENDPOINT}?${urlParams.toString()}`);
     const {data: { tracks}} = getRecommendedTrackApiResp;

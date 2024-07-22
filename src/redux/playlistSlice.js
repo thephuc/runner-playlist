@@ -63,6 +63,11 @@ const playlistSlice = createSlice({
         state.artistSeedList = action.payload
       }
     },
+    setTrackSeedList(state, action) {
+      if (action.payload && typeof Array.isArray(action.payload)) {
+        state.trackSeedList = action.payload
+      }
+    },
     resetPlaylistState() {
       return initialState
     }
@@ -89,6 +94,6 @@ const playlistSlice = createSlice({
   }
 });
 
-export const { setTempo, setArtistSeedList } = playlistSlice.actions;
+export const { setTempo, setArtistSeedList, setTrackSeedList } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
