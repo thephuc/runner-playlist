@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   Typography,
-  CardActions,
   IconButton,
   Divider,
   Box,
@@ -28,14 +27,19 @@ const TrackList = ({ tracks }) => {
 
   return (
     <Grid container spacing={2} marginY={4} paddingX={2} justifyContent="center">
-      Total track count: {tracks.filter((track) => track.genres).length}
       {tracks.map((track) => (
-        <Grid item xs={12} md={4} key={track.id} sx={{ display: 'flex',  marginBottom: 2, width: '100%'}}>
-          <Card sx={{ display: 'inline-block', flexDirection: 'column', flex: '1 0 auto', marginBottom: 2 }}>
-            <Typography variant="h5" align='center' gutterBottom>
+        <Grid item xs={12} md={4} lg={3} key={track.id} sx={{ 
+          //display: 'flex',  
+          marginBottom: 2, width: '100%'}}>
+          <Card sx={{ 
+            display: 'flex',
+            //justifyContent: 'space-between', 
+            flexDirection: 'column', 
+            flex: '1 0 auto', marginBottom: 2, width: '100%', height: '100%' }}>
+            <Typography variant="h5" align='center' gutterBottom sx={{wordBreak: 'break-word'}}>
               {track.name}
             </Typography>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', flexGrow: 1 }}>
               <CardContent sx={{ flex: '1 0 auto', flexDirection: 'column', width: 0, minWidth:'30%' }}>
                 <Typography variant="body1" color="text.secondary">
                   Artist: {track.artist}
@@ -52,12 +56,12 @@ const TrackList = ({ tracks }) => {
               </CardContent>
               <CardMedia
                 component="img"
-                sx={{ width: 150, height: 150, flexShrink: 0 }}
+                sx={{ width: 150, height: 150, flexShrink: 0, marginRight: 2 }}
                 image={track.albumImage}
                 alt="Album Cover"
               />
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }} mt={2}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }} mt={2}>
               {
                 track.previewUrl && 
                   <Box align='center' sx={{ display: 'flex'}}>
@@ -70,7 +74,7 @@ const TrackList = ({ tracks }) => {
                     </IconButton>
                   </Box>
               }
-              <FormControl variant="outlined">
+              <FormControl variant="outlined" align='center' sx={{marginX: 2}} >
                 {track.isSelected ?
                   <Button color='secondary' variant="contained" onClick={(e) => handleTrackBtn(e, track.id, TRACK_ACTIONS.REMOVE)}>Remove from playlist</Button> 
                   :
@@ -101,7 +105,6 @@ TrackList.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
-    genres: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
     previewUrl: PropTypes.string,

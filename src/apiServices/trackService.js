@@ -8,7 +8,6 @@ export const getRecommendedTracksApi = async ({tempo, seedArtistStr}) => {
     const urlParams = new URLSearchParams({
       seed_artists: seedArtistStr,
       //seed_tracks: '',
-      //seed_genres: genreStr,
       target_tempo: tempo,
       //min_popularity: 70,
       //max_popularity: 95,

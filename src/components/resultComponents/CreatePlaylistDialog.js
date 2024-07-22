@@ -8,12 +8,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 const CreatePlaylistDialog = ({handleSubmit}) => {
   const tempo = useSelector(state => state.playlist.tempo);
-  const selectedGenreList = useSelector(state => state.playlist.selectedGenreList);
+  const artistSeedList = useSelector(state => state.playlist.artistSeedList);
+  const seedArtistNames = artistSeedList.map((artist) => artist?.name)
   const [open, setOpen] = useState(false);
   const [isPublic, setIsPublic] = useState(false)
 
@@ -52,7 +53,11 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
         <DialogTitle>Create new playlist with selected songs</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Create a new playlist with tempo {tempo} {selectedGenreList && selectedGenreList.length > 0 && `and genre(s) ${selectedGenreList.join(', ')}`}
+            <Typography align='center' marginTop={2} variant="subtitle1">Tempo: {tempo}</Typography>
+            {
+              seedArtistNames && seedArtistNames.length > 0 &&
+            <Typography align='center' marginTop={2} variant="subtitle1">Artists: {seedArtistNames.join(', ')}</Typography>
+            }
           </DialogContentText>
           <TextField
             autoFocus

@@ -9,17 +9,13 @@ const RecommendedTracks = () => {
   const dispatch = useDispatch()
   const trackList = useSelector(state => state.track.tracks);
   const tempo = useSelector(state => state.playlist.tempo);
-  const selectedGenreList = useSelector(state => state.playlist.selectedGenreList);
 
 
   const flattenedTrackList = trackList.map((trackInfo) => {
     const {id, name, previewUrl, album, isSelected, uri, popularity} = trackInfo;
     const {artists, images, name: albumName, release_date: releaseDate } = album;
     const artistNameList = artists && artists.map((artist => artist.name));
-    const artistWithGenre = artists && artists.filter((artist => artist.genres));
-    const genreList = artistWithGenre.map((artist) => artist.genres)
     const artistNames = artistNameList && artistNameList.join(' | ')
-    const genres = genreList && genreList.join(' | ')
     const albumCover = images[0]
     return {
       id, 
@@ -31,7 +27,6 @@ const RecommendedTracks = () => {
       releaseDate,
       isSelected,
       uri,
-      genres,
       popularity
     }
   })

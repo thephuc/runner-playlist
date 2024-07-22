@@ -44,7 +44,6 @@ const initialState = {
   images: [], 
   uri: '',
   tempo: 0,
-  selectedGenreList: [],
   trackSeedList: [],
   artistSeedList: [],
   trackList: [],  // Array to store track URIs
@@ -58,11 +57,6 @@ const playlistSlice = createSlice({
   reducers: {
     setTempo(state, action) {
       state.tempo = action.payload || 0
-    },
-    setSelectedGenreList(state, action) {
-      if (action.payload && typeof Array.isArray(action.payload)) {
-        state.selectedGenreList = action.payload
-      }
     },
     setArtistSeedList(state, action) {
       if (action.payload && typeof Array.isArray(action.payload)) {
@@ -95,6 +89,6 @@ const playlistSlice = createSlice({
   }
 });
 
-export const { setTempo, setSelectedGenreList, setArtistSeedList } = playlistSlice.actions;
+export const { setTempo, setArtistSeedList } = playlistSlice.actions;
 
 export default playlistSlice.reducer;
