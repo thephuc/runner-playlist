@@ -10,7 +10,7 @@ import {
   Chip,
   Autocomplete,
 } from '@mui/material';
-import { getRecommendedTracks } from '../redux/trackSlice';
+import { getRecommendedTracksWithFeature } from '../redux/trackSlice';
 import { setArtistSeedList, setTempo, setTrackSeedList } from '../redux/playlistSlice';
 import { searchSpotifyData } from '../redux/searchSlice';
 import { SEARCH_TYPE } from '../utils/constants';
@@ -90,7 +90,7 @@ const TempoForm = () => {
 
     const trackIdList = trackSeedList.map((item) => item?.id)
     const seedTrackStr = trackIdList.join(',')
-    await dispatch(getRecommendedTracks({tempo, seedArtistStr, seedTrackStr}))
+    await dispatch(getRecommendedTracksWithFeature({tempo, seedArtistStr, seedTrackStr}))
     window.location.href = "/result";
   };
 

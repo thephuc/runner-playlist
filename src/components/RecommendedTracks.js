@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TrackList from './resultComponents/TrackList';
 import CreatePlaylistDialog from './resultComponents/CreatePlaylistDialog';
 import { createNewPlaylistWithSongs } from '../redux/playlistSlice';
@@ -17,7 +17,7 @@ const RecommendedTracks = () => {
 
 
   const flattenedTrackList = trackList.map((trackInfo) => {
-    const {id, name, previewUrl, album, isSelected, uri, popularity} = trackInfo;
+    const {id, name, previewUrl, album, isSelected, uri, popularity, tempo, valence, time_signature: timeSignature} = trackInfo;
     const {artists, images, name: albumName, release_date: releaseDate } = album;
     const artistNameList = artists && artists.map((artist => artist.name));
     const artistNames = artistNameList && artistNameList.join(' | ')
@@ -32,7 +32,10 @@ const RecommendedTracks = () => {
       releaseDate,
       isSelected,
       uri,
-      popularity
+      popularity,
+      tempo,
+      valence,
+      timeSignature
     }
   })
 
@@ -48,7 +51,7 @@ const RecommendedTracks = () => {
 
 
   return (
-    <div>
+    <Box marginBottom={3}>
       <Typography align='center' marginTop={4} variant="h4">Create playlist with recommended Tracks</Typography>
       <Typography align='center' marginTop={2} variant="subtitle1">Tempo: {tempo}</Typography>
       {
@@ -60,8 +63,11 @@ const RecommendedTracks = () => {
             <Typography marginX={2} align='center' variant="subtitle1">Seed Track(s): {seedTrackNames.join(', ')}</Typography>
       }
       <TrackList tracks={flattenedTrackList} />
-      <CreatePlaylistDialog handleSubmit={handleCreatePlaylistSubmit} />
-    </div>
+      { flattenedTrackList && flattenedTrackList.length > 0 && 
+            <CreatePlaylistDialog handleSubmit={handleCreatePlaylistSubmit} />
+      }
+      
+    </Box>
   );
 };
 

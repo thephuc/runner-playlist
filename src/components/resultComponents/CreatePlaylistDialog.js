@@ -32,7 +32,7 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button sx={{margin: 'auto', display: 'block'}}  variant="contained" color='success' onClick={handleClickOpen}>
         Create new playlist
       </Button>
       <Dialog
@@ -56,7 +56,7 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
             <Typography align='center' marginTop={2} variant="subtitle1">Tempo: {tempo}</Typography>
             {
               seedArtistNames && seedArtistNames.length > 0 &&
-            <Typography align='center' marginTop={2} variant="subtitle1">Artists: {seedArtistNames.join(', ')}</Typography>
+            <Typography align='center' marginTop={2} variant="subtitle1">Artist(s): {seedArtistNames.join(', ')}</Typography>
             }
           </DialogContentText>
           <TextField
@@ -71,7 +71,6 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
           />
           <TextField
             autoFocus
-            required
             margin="dense"
             id="description"
             name="description"
@@ -82,7 +81,6 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
           />
           <FormControlLabel 
             labelPlacement="start"
-            required 
             control={<Checkbox 
               checked={isPublic}
               onChange={handleIsPublicClick}
@@ -90,7 +88,7 @@ const CreatePlaylistDialog = ({handleSubmit}) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Create New Playlist</Button>
+          <Button variant='contained' color='success' type="submit">Create New Playlist</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

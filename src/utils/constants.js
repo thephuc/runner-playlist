@@ -1,5 +1,6 @@
 export const API_HOST = 'https://api.spotify.com'
 export const TRACK_RECOMMENDATION_ENDPOINT = `${API_HOST}/v1/recommendations`;
+export const TRACKS_FEATURE_ENDPOINT = `${API_HOST}/v1/audio-features`;
 export const AUDIO_FEATURES_ENDPOINT = `${API_HOST}/v1/audio-features`;
 export const GET_USER_PROFILE_ENDPOINT = `${API_HOST}/v1/me`
 export const SEARCH_ENDPOINT = `${API_HOST}/v1/search`

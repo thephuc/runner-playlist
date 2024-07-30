@@ -53,6 +53,15 @@ const TrackList = ({ tracks }) => {
                 <Typography variant="body1" color="text.secondary">
                   Popularity: {track?.popularity}
                 </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  Tempo: {track?.tempo}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  Valence: {track?.valence}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  Time Signature: {track?.timeSignature}
+                </Typography>
               </CardContent>
               <CardMedia
                 component="img"
@@ -109,7 +118,10 @@ TrackList.propTypes = {
     releaseDate: PropTypes.string.isRequired,
     previewUrl: PropTypes.string,
     albumImage: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool
+    isSelected: PropTypes.bool,
+    tempo: PropTypes.number,
+    valence: PropTypes.string,
+    timeSignature: PropTypes.number,
   })).isRequired,
 };
 

@@ -1,12 +1,14 @@
 import axiosInstance from "../axiosInstance"
-import { TRACK_RECOMMENDATION_ENDPOINT } from "../utils/constants"
+import { TRACK_RECOMMENDATION_ENDPOINT, TRACKS_FEATURE_ENDPOINT } from "../utils/constants"
 
 
 export const getRecommendedTracksApi = async ({tempo, seedArtistStr, seedTrackStr}) => {
   let trackList = []
   try {
     const urlParams = new URLSearchParams({
-      target_tempo: tempo,
+      //target_tempo: tempo,
+      min_tempo: tempo - 2,
+      max_tempo: tempo + 2,
       //min_popularity: 70,
       //max_popularity: 95,
       limit: 30
@@ -48,4 +50,25 @@ export const getRecommendedTracksApi = async ({tempo, seedArtistStr, seedTrackSt
   }
   return trackList
 
+}
+
+
+
+
+
+export const getMultipleTracksFeatureApi = async (trackIdList) => {
+  let trackList = []
+  try {
+    const urlParams = new URLSearchParams({
+      ids: trackIdList.join(',')
+    })
+    
+    const getMultipleTracksFeatureResp = await axiosInstance.get(`${TRACKS_FEATURE_ENDPOINT}?${urlParams.toString()}`);
+    const {data: { audio_features: trackFeatures }} = getMultipleTracksFeatureResp;
+    console.log(`total number of track feature items returned: ${trackFeatures.length}`)  
+    trackList = trackFeatures
+  } catch (e) {
+    console.error("Failed to get multiple track features: ", e)
+  }
+  return trackList
 }
